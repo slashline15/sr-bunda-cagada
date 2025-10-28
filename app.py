@@ -83,32 +83,114 @@ def enviar_notificacao_telegram(data: dict) -> bool:
 
 @app.route("/")
 def index():
-    """Página inicial com informações sobre o sistema."""
+    """Página inicial com estilo LexKing"""
     stats = log_manager.obter_estatisticas()
 
     html = f"""
     <!DOCTYPE html>
-    <html>
+    <html lang="pt-br">
     <head>
-        <title>Sistema de Localização de IPs</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LexKing · Sistema de Localização de IPs</title>
         <style>
-            body {{ font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }}
-            .container {{ max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
-            h1 {{ color: #333; }}
-            .stats {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }}
-            .stat-box {{ background: #f0f0f0; padding: 20px; border-radius: 5px; text-align: center; }}
-            .stat-number {{ font-size: 2em; font-weight: bold; color: #007bff; }}
-            .stat-label {{ color: #666; margin-top: 5px; }}
-            .info {{ margin-top: 30px; padding: 15px; background: #e3f2fd; border-left: 4px solid #2196f3; }}
+            body {{
+                font-family: 'Consolas', monospace;
+                background: radial-gradient(circle at 20% 20%, #0a0f1a, #000);
+                color: #00ff88;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }}
+            .container {{
+                max-width: 900px;
+                margin: 60px auto;
+                padding: 40px;
+                background: rgba(0, 10, 25, 0.75);
+                border: 1px solid #00ff88;
+                border-radius: 12px;
+                box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+                backdrop-filter: blur(6px);
+            }}
+            h1 {{
+                text-align: center;
+                color: #00ffc6;
+                font-size: 2em;
+                letter-spacing: 1px;
+                text-shadow: 0 0 10px #00ffc6;
+            }}
+            .stats {{
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 25px;
+                margin-top: 40px;
+            }}
+            .stat-box {{
+                background: rgba(0, 255, 136, 0.05);
+                border: 1px solid rgba(0,255,136,0.3);
+                border-radius: 10px;
+                text-align: center;
+                padding: 25px 10px;
+                transition: 0.3s;
+            }}
+            .stat-box:hover {{
+                transform: scale(1.05);
+                box-shadow: 0 0 15px rgba(0,255,136,0.4);
+                background: rgba(0,255,136,0.1);
+            }}
+            .stat-number {{
+                font-size: 2.4em;
+                font-weight: bold;
+                color: #00ff88;
+                text-shadow: 0 0 12px #00ff88;
+            }}
+            .stat-label {{
+                color: #aaa;
+                font-size: 0.9em;
+                margin-top: 8px;
+                letter-spacing: 0.5px;
+            }}
+            .info {{
+                margin-top: 40px;
+                padding: 20px;
+                background: rgba(0,255,136,0.07);
+                border-left: 4px solid #00ff88;
+                border-radius: 6px;
+                font-size: 0.95em;
+            }}
+            .matrix-bg {{
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                background: repeating-linear-gradient(
+                    rgba(0,255,136,0.05) 0px,
+                    rgba(0,255,136,0.05) 1px,
+                    transparent 1px,
+                    transparent 3px
+                );
+                animation: flicker 2s infinite alternate;
+            }}
+            @keyframes flicker {{
+                0% {{ opacity: 0.8; }}
+                100% {{ opacity: 0.4; }}
+            }}
+            .footer {{
+                margin-top: 50px;
+                text-align: center;
+                color: #555;
+                font-size: 0.8em;
+            }}
         </style>
     </head>
     <body>
+        <div class="matrix-bg"></div>
         <div class="container">
-            <h1>🌍 Sistema de Localização de IPs</h1>
-            <p>Sistema ativo e monitorando acessos.</p>
+            <h1>🧠 LexKing · Sistema de Localização de IPs</h1>
+            <p style="text-align:center;">Monitorando conexões e registrando entidades digitais.</p>
 
-            <h2>Estatísticas</h2>
             <div class="stats">
                 <div class="stat-box">
                     <div class="stat-number">{stats.get('total', 0)}</div>
@@ -129,13 +211,18 @@ def index():
             </div>
 
             <div class="info">
-                <strong>ℹ️ Informação:</strong> Use o bot do Telegram para consultar os registros.
+                <strong>💡 Dica:</strong> Acesse o bot do Telegram para consultar logs, rastrear IPs e analisar padrões.
+            </div>
+
+            <div class="footer">
+                LexKing™ · since 2025 · <span style="color:#00ff88;">v1.0</span>
             </div>
         </div>
     </body>
     </html>
     """
     return html
+
 
 
 @app.route("/health")
