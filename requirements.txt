@@ -1,0 +1,22 @@
+# Sistema de Localização de IPs - Dependências
+
+# Bot do Telegram
+python-telegram-bot>=20.0
+
+# Servidor Web
+Flask>=2.3.0
+
+# HTTP Client
+requests>=2.31.0
+
+# Gerenciamento de ambiente
+python-dotenv>=1.0.0
+
+# Geração de mapas
+folium>=0.14.0
+
+# Geocodificação
+geopy>=2.3.0
+
+# Utilidades
+certifi>=2023.0.0
